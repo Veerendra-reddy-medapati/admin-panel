@@ -8,7 +8,11 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://admin-panel-eight-green-47.vercel.app"],
+  }),
+);
 app.use(express.json());
 
 // CREATE
