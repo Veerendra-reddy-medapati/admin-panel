@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 const ContactForm = ({ onSubmit, existing }) => {
-  const categories = ["men", "women", "kid", "couple"];
+  const categories = ["men", "women", "kid", "couple", "family", "group"];
   const mediaTypeCategories = ["image", "video"];
 
-  const [Category, setCategory] = useState("");
+  const [Category, setCategory] = useState([]);
   const [mediaType, setmediaType] = useState("");
   const [mediaUrl, setmediaUrl] = useState("");
   const [Prompt, setPrompt] = useState("");
@@ -13,43 +13,75 @@ const ContactForm = ({ onSubmit, existing }) => {
 
   useEffect(() => {
     if (existing) {
-      setCategory(existing.Category);
-      setmediaType(existing.mediaType);
-      setmediaUrl(existing.mediaUrl);
-      setPrompt(existing.Prompt);
-      setPrompt2(existing.Prompt2);
-      setdescription(existing.description);
+      setCategory(existing.Category || []);
+      setmediaType(existing.mediaType || "");
+      setmediaUrl(existing.mediaUrl || "");
+      setPrompt(existing.Prompt || "");
+      setPrompt2(existing.Prompt2 || "");
+      setdescription(existing.description || "");
     }
   }, [existing]);
 
+  const handleCategoryChange = (category) => {
+    if (Category.includes(category)) {
+      setCategory(Category.filter((cat) => cat !== category));
+    } else {
+      setCategory([...Category, category]);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ Category, mediaType, mediaUrl, Prompt, Prompt2, description });
-    setCategory("");
+
+    onSubmit({
+      Category,
+      mediaType,
+      mediaUrl,
+      Prompt,
+      Prompt2,
+      description,
+    });
+
+    setCategory([]);
     setmediaType("");
     setmediaUrl("");
     setPrompt("");
     setPrompt2("");
     setdescription("");
   };
+
   return (
     <form onSubmit={handleSubmit}>
-      <select value={Category} onChange={(e) => setCategory(e.target.value)}>
-        <option value="">Select Category</option>
+      <div>
+        <h4>Select Categories</h4>
 
         {categories.map((cat) => (
-          <option key={cat} value={cat}>
+          <label
+            key={cat}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "5px",
+              marginRight: "15px",
+              marginBottom: "10px",
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={Category.includes(cat)}
+              onChange={() => handleCategoryChange(cat)}
+            />
             {cat}
-          </option>
+          </label>
         ))}
-      </select>
+      </div>
 
       <select
         value={mediaType}
         required
         onChange={(e) => setmediaType(e.target.value)}
       >
-        <option value="">Select Media Category</option>
+        <option value="">Select Media Type</option>
 
         {mediaTypeCategories.map((cat) => (
           <option key={cat} value={cat}>
@@ -58,35 +90,54 @@ const ContactForm = ({ onSubmit, existing }) => {
         ))}
       </select>
 
+      <br />
+      <br />
+
       <input
         type="text"
         value={mediaUrl}
-        placeholder="enter URL"
+        placeholder="Enter URL"
         required
         onChange={(e) => setmediaUrl(e.target.value)}
       />
+
+      <br />
+      <br />
+
       <input
         type="text"
         value={Prompt}
-        placeholder="enter prompt...."
+        placeholder="Enter Prompt..."
         required
         onChange={(e) => setPrompt(e.target.value)}
       />
 
+      <br />
+      <br />
+
       <input
         type="text"
         value={Prompt2}
-        placeholder="enter prompt 2...."
+        placeholder="Enter Prompt 2..."
         onChange={(e) => setPrompt2(e.target.value)}
       />
+
+      <br />
+      <br />
+
       <input
         type="text"
         value={description}
-        placeholder="enter description...."
+        placeholder="Enter Description..."
         onChange={(e) => setdescription(e.target.value)}
       />
 
-      <button type="submit">{existing ? "Update" : "Add"}</button>
+      <br />
+      <br />
+
+      <button type="submit">
+        {existing ? "Update" : "Add"}
+      </button>
     </form>
   );
 };
