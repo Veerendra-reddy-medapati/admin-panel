@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const ContactForm = ({ onSubmit, existing }) => {
   const categories = [
+    "new"
     "men",
     "women",
     "couple",
