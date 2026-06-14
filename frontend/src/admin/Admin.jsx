@@ -8,26 +8,34 @@ const Admin = () => {
   const [PromptsData, setPromptsData] = useState([]);
   const [EditPrompts, setEditPrompts] = useState(null);
 
- const fetchPrompts = async () => {
-  const res = await API.get("/api/prompts");
-  setPromptsData(res.data);
-};
+  //load all contacts
+  const fetchPrompts = async () => {
+    const res = await API.get("/");
+    setPromptsData(res.data);
+  };
 
-const addPrompt = async (data) => {
-  await API.post("/api/prompts", data);
-  fetchPrompts();
-};
+  useEffect(() => {
+    fetchPrompts();
+  }, []);
 
-const deletePrompt = async (id) => {
-  await API.delete(`/api/prompts/${id}`);
-  fetchPrompts();
-};
+  //add new contact
+  const addPrompt = async (data) => {
+    await API.post("/", data);
+    fetchPrompts();
+  };
 
-const updatePrompt = async (data) => {
-  await API.put(`/api/prompts/${EditPrompts._id}`, data);
-  setEditPrompts(null);
-  fetchPrompts();
-};
+  //delete contact
+  const deletePrompt = async (id) => {
+    await API.delete(`/${id}`);
+    fetchPrompts();
+  };
+
+  //update contact
+  const updatePrompt = async (data) => {
+    await API.put(`/${EditPrompts._id}`, data);
+    setEditPrompts(null);
+    fetchPrompts();
+  };
 
   return (
     <div>
