@@ -9,6 +9,7 @@ const ContactForm = ({ onSubmit, existing }) => {
     "family",
     "group",
     "others",
+    "editing",
   ];
 
   const mediaTypeCategories = ["image", "video"];
