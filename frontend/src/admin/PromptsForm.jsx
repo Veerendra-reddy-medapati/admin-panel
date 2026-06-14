@@ -4,8 +4,9 @@ const ContactForm = ({ onSubmit, existing }) => {
   const categories = [
     "men",
     "women",
-    "kid",
     "couple",
+    "kid",
+    "editing",
     "family",
     "group",
     "others",
