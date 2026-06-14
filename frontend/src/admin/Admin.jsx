@@ -10,7 +10,7 @@ const Admin = () => {
 
   //load all contacts
   const fetchPrompts = async () => {
-    const res = await API.get("/");
+    const res = await API.get("/api/prompts");
     setPromptsData(res.data);
   };
 
@@ -20,19 +20,19 @@ const Admin = () => {
 
   //add new contact
   const addPrompt = async (data) => {
-    await API.post("/", data);
+    await API.post("/api/prompts", data);
     fetchPrompts();
   };
 
   //delete contact
   const deletePrompt = async (id) => {
-    await API.delete(`/${id}`);
+    await API.delete(`/api/prompts/${id}`);
     fetchPrompts();
   };
 
   //update contact
   const updatePrompt = async (data) => {
-    await API.put(`/${EditPrompts._id}`, data);
+    await API.put(`/api/prompts/${EditPrompts._id}`, data);
     setEditPrompts(null);
     fetchPrompts();
   };
