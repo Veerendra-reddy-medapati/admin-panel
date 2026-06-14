@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 const ContactForm = ({ onSubmit, existing }) => {
-  const categories = ["men", "women", "kid", "couple", "family", "group"];
+  const categories = [
+    "men",
+    "women",
+    "kid",
+    "couple",
+    "family",
+    "group",
+    "others",
+  ];
+
   const mediaTypeCategories = ["image", "video"];
 
   const [Category, setCategory] = useState([]);
@@ -13,7 +22,14 @@ const ContactForm = ({ onSubmit, existing }) => {
 
   useEffect(() => {
     if (existing) {
-      setCategory(existing.Category || []);
+      setCategory(
+        Array.isArray(existing.Category)
+          ? existing.Category
+          : existing.Category
+            ? [existing.Category]
+            : [],
+      );
+
       setmediaType(existing.mediaType || "");
       setmediaUrl(existing.mediaUrl || "");
       setPrompt(existing.Prompt || "");
@@ -32,6 +48,11 @@ const ContactForm = ({ onSubmit, existing }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (Category.length === 0) {
+      alert("Select at least one category");
+      return;
+    }
 
     onSubmit({
       Category,
@@ -52,7 +73,7 @@ const ContactForm = ({ onSubmit, existing }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      <div style={{ marginBottom: "15px" }}>
         <h4>Select Categories</h4>
 
         {categories.map((cat) => (
@@ -135,9 +156,7 @@ const ContactForm = ({ onSubmit, existing }) => {
       <br />
       <br />
 
-      <button type="submit">
-        {existing ? "Update" : "Add"}
-      </button>
+      <button type="submit">{existing ? "Update" : "Add"}</button>
     </form>
   );
 };
