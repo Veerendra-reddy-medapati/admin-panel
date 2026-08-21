@@ -10,6 +10,7 @@ const ContactForm = ({ onSubmit, existing }) => {
     "group",
     "others",
     "editing",
+    "RakshaBandhan",
   ];
 
   const mediaTypeCategories = ["image", "video"];
