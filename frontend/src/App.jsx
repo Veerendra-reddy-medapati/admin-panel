@@ -11,9 +11,9 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Admin />} />
 
-        <Route path="/admin/single-category" element={<SingleCategory />} />
+        <Route path="/single-category" element={<SingleCategory />} />
 
-        <Route path="/admin/two-categories" element={<TwoCategories />} />
+        <Route path="/two-categories" element={<TwoCategories />} />
       </Routes>
     </BrowserRouter>
   );
