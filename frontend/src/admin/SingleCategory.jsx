@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../api";
 import ContactForm from "./PromptsForm";
 
-const TwoCategories = () => {
+const SingleCategory = () => {
   const [prompts, setPrompts] = useState([]);
   const [editPrompt, setEditPrompt] = useState(null);
 
@@ -10,12 +10,12 @@ const TwoCategories = () => {
     try {
       const res = await API.get("/api/prompts");
 
-      // Only prompts having exactly 2 categories
-      const twoCategoryPrompts = res.data.filter(
-        (item) => Array.isArray(item.Category) && item.Category.length === 2,
+      // Only prompts having exactly 1 category
+      const singleCategoryPrompts = res.data.filter(
+        (item) => Array.isArray(item.Category) && item.Category.length === 1,
       );
 
-      setPrompts(twoCategoryPrompts);
+      setPrompts(singleCategoryPrompts);
     } catch (error) {
       console.error("Error fetching prompts:", error);
     }
@@ -53,7 +53,7 @@ const TwoCategories = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Two Category Prompts</h2>
+      <h2>Single Category Prompts</h2>
 
       {editPrompt && (
         <div
@@ -79,13 +79,13 @@ const TwoCategories = () => {
       <h3>Total: {prompts.length}</h3>
 
       {prompts.length === 0 ? (
-        <p>No two category prompts found.</p>
+        <p>No single category prompts found.</p>
       ) : (
         <ul>
           {prompts.map((item) => (
             <li key={item._id} style={{ marginBottom: "30px" }}>
-              <strong>Categories:</strong>{" "}
-              {item.Category.join(" + ")}
+              <strong>Category:</strong>{" "}
+              {item.Category.join(", ")}
 
               {item.mediaType === "image" ? (
                 <img
@@ -146,4 +146,4 @@ const TwoCategories = () => {
   );
 };
 
-export default TwoCategories;
+export default SingleCategory;
