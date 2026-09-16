@@ -1,11 +1,21 @@
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Admin from "./admin/Admin";
+import SingleCategory from "./admin/SingleCategory";
+import TwoCategories from "./admin/TwoCategories";
 
 const App = () => {
   return (
-    <div>
-      <Admin />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Admin />} />
+
+        <Route path="/admin/single-category" element={<SingleCategory />} />
+
+        <Route path="/admin/two-categories" element={<TwoCategories />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
